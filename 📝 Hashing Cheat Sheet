@@ -1,0 +1,135 @@
+🏛 Origins of Hashing
+
+Hash functions date back to the early days of computing, initially designed for efficient data lookup. A hash table stores these values, allowing fast retrieval of associated data.
+
+One of the earliest and most well-known hash functions is MD5 (Message Digest 5), developed by Ronald Rivest at MIT in the early 1990s. MD5 converts any input into a 128-bit value—a string of 32 characters. Altering even a single character in the source file produces a completely different hash.
+
+Pro tip: Longer hash values generally provide stronger security. MD5’s 128-bit digest is now considered weak and vulnerable to attacks.
+
+Example:
+
+Plaintext: "HelloWorld"
+MD5 Hash: 68e109f0f40ca72a15e05cc22786f8e6
+
+⚠️ Hash Collisions
+
+A key limitation of all hash functions is hash collisions—when two different inputs generate the same hash value. Since hashes are widely used for authentication, collisions can allow attackers to impersonate valid data.
+
+MD5 and other shorter digest algorithms are especially vulnerable.
+
+Common risk: Using weak hash functions for passwords, certificates, or digital signatures can compromise security.
+
+📝 Hashing Cheat Sheet
+🔑 What is Hashing?
+
+Converts data of any size → fixed-size digest
+
+Used for: Data integrity, authentication, non-repudiation
+
+Hash functions are one-way (irreversible)
+
+🕰 History & Evolution
+
+MD5 (1990s) → 128-bit digest, vulnerable to collisions
+
+SHA Family → NIST-approved, stronger and collision-resistant
+
+SHA-1 → 160-bit (weak)
+
+SHA-256 → 256-bit (strong)
+
+SHA-384 → 384-bit
+
+SHA-512 → 512-bit
+
+🌈 Key Concepts
+Term	Definition	Notes
+Hash Collision	Two different inputs → same hash	Attackers can impersonate data
+Salt	Random string added to data before hashing	Prevents rainbow table attacks
+Rainbow Table	Precomputed hash-to-password mapping	Ineffective against salted hashes
+Digest Length	Size of output hash	Longer = stronger security
+🛠 Tools by OS
+
+Windows:
+
+CertUtil -hashfile filename SHA256
+
+HashTab (GUI)
+
+7-Zip → generates hashes
+
+Linux:
+
+sha256sum file.txt
+
+md5sum file.txt
+
+openssl dgst -sha256 file.txt
+
+hashcat (ethical pentesting only)
+
+macOS:
+
+shasum -a 256 file.txt
+
+md5 file.txt
+
+openssl dgst -sha512 file.txt
+
+💡 Pro Tip: Always verify software downloads with hash checks!
+
+⚠️ Common Mistakes
+
+Using MD5 or SHA-1 for security-critical applications
+
+Storing unsalted passwords
+
+Using fast hashing for passwords (e.g., SHA-256) without bcrypt/scrypt/Argon2
+
+Ignoring hash verification during file transfers
+
+🛡 Mitigation Strategies
+
+✅ Use SHA-256+ or modern algorithms for secure storage
+
+✅ Salt passwords before hashing
+
+✅ Use slow hash algorithms for passwords: bcrypt, scrypt, Argon2
+
+✅ Verify hashes on downloads, scripts, or CI/CD pipelines
+
+✅ Educate users about strong passwords and risks
+
+🔍 Pro Tips
+
+Use unique salts for every password
+
+Store hashes and salts separately
+
+Monitor for hash collision attacks
+
+Integrate hash verification in automation pipelines
+
+Longer digests = harder to crack
+
+⚡ Example: Password Hashing
+import hashlib
+import os
+
+password = "password123"
+salt = os.urandom(16)  # generate random salt
+hashed = hashlib.sha256(password.encode() + salt).hexdigest()
+print("Salt:", salt.hex())
+print("Hash:", hashed)
+
+📌 Quick Reference Table
+Algorithm	Digest Size	Security	Use Case
+MD5	128-bit	Weak	Legacy only, file checksum
+SHA-1	160-bit	Weak	Legacy applications
+SHA-224	224-bit	Moderate	General-purpose hashing
+SHA-256	256-bit	Strong	Modern security, certificates
+SHA-384	384-bit	Strong	High-security data
+SHA-512	512-bit	Very Strong	High-security, blockchain
+bcrypt	N/A	Very Strong	Password storage
+scrypt	N/A	Very Strong	Password storage
+Argon2	N/A	Very Strong	Password storage
